@@ -2,4 +2,6 @@
 
 使用有道API，查询单词，用LevelDB本地缓冲
 
+![](http://mean101.com/go/go-youdao.png)
+
 
