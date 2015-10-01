@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<mete charset="utf-8" />
+
+<head>
+    <title>YouDao</title>
+</head>
+<link href='https://fonts.googleapis.com/css?family=Roboto:400,500' rel='stylesheet' type='text/css'>
+<style>
+.form {
+    width: 400px;
+    margin: 0 auto;
+    text-align: left;
+    margin-top: 10em;
+}
+
+.form label {
+    display: block;
+    text-align: left;
+    color: white;
+    font-size: .875em;
+}
+
+.form .text-input {
+    overflow: hidden;
+    margin-bottom: .875em;
+}
+
+.form input[type="text"],
+.form input[type="password"] {
+    width: 100%;
+    padding: 1em 0 12px;
+    padding-left: 0;
+    background: none;
+    color: white;
+    font-size: 1.2em;
+    font-weight: 400;
+    border: none;
+    border-bottom: 1px solid #999;
+}
+
+.form input[type="text"]:focus + .separator,
+.form input[type="password"]:focus + .separator {
+    -webkit-transform: scaleX(1) translateY(-2px);
+    -ms-transform: scaleX(1) translateY(-2px);
+    transform: scaleX(1) translateY(-2px);
+    opacity: 1;
+}
+
+.form input[type="submit"] {
+    color: white;
+    background: #3599FF;
+    padding: 1em 1.4em;
+    font-size: 1.2em;
+    border: none;
+    border-radius: 10px;
+}
+
+.separator {
+    height: 3px;
+    width: 100%;
+    background: #68B3FF;
+    display: block;
+    -webkit-transform: scaleX(0) translateY(-2px);
+    -ms-transform: scaleX(0) translateY(-2px);
+    transform: scaleX(0) translateY(-2px);
+    -webkit-transform-origin: 50%;
+    -ms-transform-origin: 50%;
+    transform-origin: 50%;
+    opacity: 0;
+    -webkit-transition: all 0.12s cubic-bezier(0, 0, 0.52, 1.11);
+    transition: all 0.12s cubic-bezier(0, 0, 0.52, 1.11);
+}
+
+:focus {
+    outline-color: transparent;
+    outline-style: none;
+}
+
+body {
+    font-family: Roboto;
+    background: #282F32;
+}
+
+body a {
+    color: #3599FF;
+    font-size: 1em;
+    text-decoration: none;
+}
+
+.form-bottom {
+    margin-top: 1.25em;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+}
+
+#show {
+    color: #fff;
+}
+</style>
+
+<body>
+    <div class="main--layout">
+        <div class="main--content">
+            <div class="form">
+                <h1 style="color:#f0f0f0">Go语言：有道词典</h1>
+                <div class="text-input">
+                    <label for="search">Search</label>
+                    <input type="text" name="search" id="search" placeholder=" " />
+                    <span class="separator"> </span>
+                </div>
+                <p id="show">
+                </p>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+    var search = document.getElementById("search");
+    var show = document.getElementById("show");
+    search.onkeyup = function(event) {
+        if (event.keyCode == 13) {
+            var word = this.value.trim();
+            if (word) {
+                query(word)
+            }
+        }
+
+    }
+
+    function query(word) {
+        var res = new XMLHttpRequest();
+        var form = new FormData();
+        form.append("query", word);
+        res.open("POST", "http://localhost:9090");
+        res.send(form);
+        res.onreadystatechange = function(argument) {
+
+            if (argument.currentTarget.readyState == 4) {
+                show.innerHTML = argument.currentTarget.responseText;
+            }
+
+        }
+
+    }
+    </script>
+</body>
+
+</html>
